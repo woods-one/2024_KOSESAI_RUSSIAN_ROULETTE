@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class TestPrefab : MonoBehaviour
@@ -21,14 +21,20 @@ public class TestPrefab : MonoBehaviour
         prefabs.Add((GameObject)Instantiate(hoge));
         isDeleted = false;
     }
-
-    void Update()
+    
+    async UniTask Update()
     {
         if (Input.GetKey(KeyCode.E) && isDeleted == false)
         {
             isDeleted = true;
             Destroy(prefabs[prefabs.Count - 1]);
             prefabs.RemoveAt(prefabs.Count - 1);
+
+            var cts = new CancellationTokenSource();
+
+            await UniTask.Delay(1000 ,cancellationToken:cts.Token);
+            
+            isDeleted = false;
         }
     }
 }
