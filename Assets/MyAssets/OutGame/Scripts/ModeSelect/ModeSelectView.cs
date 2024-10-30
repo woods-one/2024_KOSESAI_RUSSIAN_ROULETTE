@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Roulette.Utility;
 using Roulette.Utility.UI;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 namespace Roulette.OutGame
 {
@@ -11,8 +10,7 @@ namespace Roulette.OutGame
         [SerializeField]
         private List<RouletteButton> _buttons = new ();
 
-        //TODO:そのうちInitializeにする
-        private void Start()
+        public void Initialize()
         {
             foreach (var _button in _buttons)
             {
@@ -31,6 +29,16 @@ namespace Roulette.OutGame
                     _button.SetSelected(true);
                 }
             }
+        }
+
+        public bool SelectButton(int index)
+        {
+            for (int i = 0; i < _buttons.Count; i++)
+            {
+                _buttons[i].SetSelected(i == index);
+            }
+            
+            return _buttons[index].IsDisabled;
         }
     }
 }
