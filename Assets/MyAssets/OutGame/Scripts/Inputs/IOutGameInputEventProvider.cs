@@ -9,6 +9,8 @@ namespace Roulette.Utility.Inputs
     {
         ReadOnlyReactiveProperty<bool> RightButton { get; }
         ReadOnlyReactiveProperty<bool> LeftButton { get; }
+        ReadOnlyReactiveProperty<bool> UpButton { get; }
+        ReadOnlyReactiveProperty<bool> DownButton { get; }
         ReadOnlyReactiveProperty<bool> CancelButton { get; }
         ReadOnlyReactiveProperty<bool> DecideButton { get; }
     }
