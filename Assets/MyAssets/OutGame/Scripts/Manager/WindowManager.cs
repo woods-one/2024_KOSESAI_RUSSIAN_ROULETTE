@@ -51,27 +51,27 @@ namespace Roulette.OutGame
             {
                 case OutGameWindowType.ModeSelect:
                     _openWindows.Add(Instantiate(_modeSelectPrefab).GetComponent<IWindowUI>());
-                    PreviousWindowHide();
+                    HidePreviousWindow();
                     OpenWindowTypes.Add(OutGameWindowType.ModeSelect);
                     break;
                 case OutGameWindowType.GameSetting:
                     OpenWindowTypes.Add(OutGameWindowType.GameSetting);
-                    PreviousWindowHide();
+                    HidePreviousWindow();
                     break;
                 case OutGameWindowType.ItemSwitch:
                     OpenWindowTypes.Add(OutGameWindowType.ItemSwitch);
-                    PreviousWindowHide();
+                    HidePreviousWindow();
                     break;
                 case OutGameWindowType.HowToPlay:
                     OpenWindowTypes.Add(OutGameWindowType.HowToPlay);
-                    PreviousWindowHide();
+                    HidePreviousWindow();
                     break;
                 default:
                     break;
             }
         }
 
-        private void PreviousWindowHide()
+        private void HidePreviousWindow()
         {
             if (_openWindows.Count - 2 >= 0)
             {
