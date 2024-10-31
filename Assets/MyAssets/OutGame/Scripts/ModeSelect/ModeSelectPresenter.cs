@@ -18,9 +18,12 @@ namespace Roulette.OutGame
         
         private bool _canChangeMode;
 
+        [SerializeField]
         private bool _isAnimation;
         
         public bool IsAnimation => _isAnimation;
+        
+        OutGameWindowType _windowType = OutGameWindowType.ModeSelect;
         
         void Start()
         {
@@ -33,23 +36,26 @@ namespace Roulette.OutGame
 
         void Bind()
         {
-            _model.ModeIndex.Subscribe(x =>
-            {
-                if (_view.SelectButton(x))
+            _model.ModeIndex
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Subscribe(x =>
                 {
-                    if (_model.MoveRight)
+                    if (_view.SelectButton(x))
                     {
-                        _model.ChangeRightMode();
+                        if (_model.MoveRight)
+                        {
+                            _model.ChangeRightMode();
+                        }
+                        else
+                        {
+                            _model.ChangeLeftMode();
+                        }
                     }
-                    else
-                    {
-                        _model.ChangeLeftMode();
-                    }
-                }
-            });
+                });
             
             OutGameInput.Instance.RightButton
                 .Skip(1)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
                 .Subscribe(_ =>
                 {
                     if (_canChangeMode)
@@ -61,6 +67,7 @@ namespace Roulette.OutGame
             
             OutGameInput.Instance.LeftButton
                 .Skip(1)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
                 .Subscribe(_ =>
                 {
                     if (_canChangeMode)

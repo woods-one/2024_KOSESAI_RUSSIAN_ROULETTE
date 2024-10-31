@@ -235,10 +235,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 565014027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06ca4116353fe412e920c0a466ebb4f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 4411b2615060d420a830bcb7727d3aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoge: {fileID: 1243646007561216895, guid: 5e26af1c7fb614edcae7e2764a57e7c0, type: 3}
+  _modeSelectPrefab: {fileID: 1243646007561216895, guid: 5e26af1c7fb614edcae7e2764a57e7c0, type: 3}
 --- !u!1 &1031155147
 GameObject:
   m_ObjectHideFlags: 0
