@@ -2,12 +2,14 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Roulette.Utility.Inputs;
 using R3;
-
 using UnityEngine;
 
 namespace Roulette.OutGame
 {
-    public class ModeSelectPresenter : MonoBehaviour
+    /// <summary>
+    /// ModeSelectのプレゼンター
+    /// </summary>
+    public class ModeSelectPresenter : MonoBehaviour, IWindowUI
     {
         private ModeSelectModel _model;
         
@@ -15,54 +17,65 @@ namespace Roulette.OutGame
         private ModeSelectView _view;
         
         private bool _canChangeMode;
+
+        [SerializeField]
+        private bool _isAnimation;
         
-        void Start()
+        public bool IsAnimation => _isAnimation;
+        
+        OutGameWindowType _windowType = OutGameWindowType.ModeSelect;
+        
+        public void Initialize()
         {
             _model = new ModeSelectModel();
             _view.Initialize();
             _canChangeMode = true;
             Bind();
+            _model.SetIndex(0);
         }
 
         void Bind()
         {
-            _model.ModeIndex.Subscribe(x =>
-            {
-                Debug.Log(x);
-                if (_view.SelectButton(x))
+            _model.ModeIndex
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Subscribe(x =>
                 {
-                    if (_model.MoveRight)
+                    if (_view.SelectButton(x))
                     {
-                        _model.ChangeRightMode();
+                        if (_model.MoveRight)
+                        {
+                            _model.ChangeRightMode();
+                        }
+                        else
+                        {
+                            _model.ChangeLeftMode();
+                        }
                     }
-                    else
-                    {
-                        _model.ChangeLeftMode();
-                    }
-                }
-            });
+                }).AddTo(this);
             
             OutGameInput.Instance.RightButton
                 .Skip(1)
-                .Subscribe(x =>
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Subscribe(_ =>
                 {
                     if (_canChangeMode)
                     {
                         _model.ChangeRightMode();
                         CanChangeMode().Forget();
                     }
-                });
+                }).AddTo(this);
             
             OutGameInput.Instance.LeftButton
                 .Skip(1)
-                .Subscribe(x =>
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Subscribe(_ =>
                 {
                     if (_canChangeMode)
                     {
                         _model.ChangeLeftMode();
                         CanChangeMode().Forget();
                     }
-                });
+                }).AddTo(this);
         }
 
         async UniTask CanChangeMode()
@@ -70,6 +83,16 @@ namespace Roulette.OutGame
             _canChangeMode = false;
             await UniTask.Delay(100 , cancellationToken: new CancellationToken());
             _canChangeMode = true;
+        }
+
+        public void Show()
+        { 
+            _view.Show();
+        }
+        
+        public void Hide()
+        {
+            _view.Hide();
         }
     }
 }

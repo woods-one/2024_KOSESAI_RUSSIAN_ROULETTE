@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Roulette.Utility
 {
+    /// <summary>
+    /// プログラム的定数はここ
+    /// </summary>
     public static class RouletteConst 
     {
         public static readonly Color32 MainColor = new Color32(255, 255, 255, 255);

@@ -1,9 +1,11 @@
 using R3;
 using Roulette.Utility;
-using UnityEngine;
 
 namespace Roulette.OutGame
 {
+    /// <summary>
+    /// ModeSelectのモデル
+    /// </summary>
     public class ModeSelectModel
     {
         private readonly ReactiveProperty<int> _modeIndex = new ();
@@ -15,16 +17,17 @@ namespace Roulette.OutGame
         public ModeSelectModel()
         {
             _moveRight = true;
-            _modeIndex.Value = 0;
         }
 
         public void ChangeRightMode()
         {
-            _modeIndex.Value++;
-
-            if (_modeIndex.Value >= RouletteConst.MAX_MODE)
+            if (_modeIndex.Value + 1 >= RouletteConst.MAX_MODE)
             {
                 _modeIndex.Value = 0;
+            }
+            else
+            {
+                _modeIndex.Value++;
             }
             
             _moveRight = true;
@@ -32,14 +35,21 @@ namespace Roulette.OutGame
         
         public void ChangeLeftMode()
         {
-            _modeIndex.Value--;
-
-            if (_modeIndex.Value <=  -1)
+            if (_modeIndex.Value - 1 <=  -1)
             {
                 _modeIndex.Value = RouletteConst.MAX_MODE - 1;
             }
+            else
+            {
+                _modeIndex.Value--;
+            }
 
             _moveRight = false;
+        }
+
+        public void SetIndex(int modeIndex)
+        {
+            _modeIndex.Value = modeIndex;
         }
     }
 }

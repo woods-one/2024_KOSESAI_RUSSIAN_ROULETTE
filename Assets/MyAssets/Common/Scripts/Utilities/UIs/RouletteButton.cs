@@ -3,6 +3,10 @@ using UnityEngine.UI;
 
 namespace Roulette.Utility.UI
 {
+    /// <summary>
+    /// 画面のボタンの汎用的なクラス
+    /// ボタンと言いつつ実際に触ることはできない
+    /// </summary>
     public class RouletteButton : MonoBehaviour
     {
         [SerializeField]
@@ -31,6 +35,20 @@ namespace Roulette.Utility.UI
             _disabledImage.gameObject.SetActive(false);
 
             SetSelected(false);
+        }
+
+        public void Show()
+        {
+            _mainImage.gameObject.SetActive(true);
+            _selectImage.gameObject.SetActive(_isSelected);
+            _disabledImage.gameObject.SetActive(_isDisabled);
+        }
+
+        public void Hide()
+        {
+            _mainImage.gameObject.SetActive(false);
+            _selectImage.gameObject.SetActive(false);
+            _disabledImage.gameObject.SetActive(false);
         }
 
         public void SetSelected(bool isSelected)
