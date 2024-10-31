@@ -34,6 +34,22 @@ namespace Roulette.OutGame
             }
         }
 
+        public void Show()
+        {
+            foreach (var _button in _buttons)
+            {
+                _button.Show();
+            }
+        }
+        
+        public void Hide()
+        {
+            foreach (var _button in _buttons)
+            {
+                _button.Hide();
+            }
+        }
+
         public bool SelectButton(int index)
         {
             for (int i = 0; i < _buttons.Count; i++)

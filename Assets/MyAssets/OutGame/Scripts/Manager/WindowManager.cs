@@ -40,7 +40,7 @@ namespace Roulette.OutGame
             }
         }
 
-        private async UniTaskVoid Start()
+        private void Start()
         {
             OpenWindow(OutGameWindowType.ModeSelect);
         }
@@ -51,19 +51,31 @@ namespace Roulette.OutGame
             {
                 case OutGameWindowType.ModeSelect:
                     _openWindows.Add(Instantiate(_modeSelectPrefab).GetComponent<IWindowUI>());
+                    PreviousWindowHide();
                     OpenWindowTypes.Add(OutGameWindowType.ModeSelect);
                     break;
                 case OutGameWindowType.GameSetting:
                     OpenWindowTypes.Add(OutGameWindowType.GameSetting);
+                    PreviousWindowHide();
                     break;
                 case OutGameWindowType.ItemSwitch:
                     OpenWindowTypes.Add(OutGameWindowType.ItemSwitch);
+                    PreviousWindowHide();
                     break;
                 case OutGameWindowType.HowToPlay:
                     OpenWindowTypes.Add(OutGameWindowType.HowToPlay);
+                    PreviousWindowHide();
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void PreviousWindowHide()
+        {
+            if (_openWindows.Count - 2 >= 0)
+            {
+                _openWindows[_openWindows.Count - 2].Hide();
             }
         }
         

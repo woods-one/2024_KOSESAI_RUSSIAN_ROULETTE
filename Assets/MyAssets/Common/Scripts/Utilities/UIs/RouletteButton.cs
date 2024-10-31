@@ -37,6 +37,20 @@ namespace Roulette.Utility.UI
             SetSelected(false);
         }
 
+        public void Show()
+        {
+            _mainImage.gameObject.SetActive(true);
+            _selectImage.gameObject.SetActive(_isSelected);
+            _disabledImage.gameObject.SetActive(_isDisabled);
+        }
+
+        public void Hide()
+        {
+            _mainImage.gameObject.SetActive(false);
+            _selectImage.gameObject.SetActive(false);
+            _disabledImage.gameObject.SetActive(false);
+        }
+
         public void SetSelected(bool isSelected)
         {
             if (isSelected)

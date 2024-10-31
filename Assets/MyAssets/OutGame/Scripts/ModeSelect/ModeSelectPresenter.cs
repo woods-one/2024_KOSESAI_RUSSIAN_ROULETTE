@@ -84,5 +84,15 @@ namespace Roulette.OutGame
             await UniTask.Delay(100 , cancellationToken: new CancellationToken());
             _canChangeMode = true;
         }
+
+        public void Show()
+        {
+            _view.Show();
+        }
+        
+        public void Hide()
+        {
+            _view.Hide();
+        }
     }
 }
