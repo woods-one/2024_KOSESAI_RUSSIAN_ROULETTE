@@ -28,13 +28,13 @@ namespace Roulette.OutGame
             _view.Initialize();
             _canChangeMode = true;
             Bind();
+            _model.SetIndex(0);
         }
 
         void Bind()
         {
             _model.ModeIndex.Subscribe(x =>
             {
-                Debug.Log(x);
                 if (_view.SelectButton(x))
                 {
                     if (_model.MoveRight)
@@ -50,7 +50,7 @@ namespace Roulette.OutGame
             
             OutGameInput.Instance.RightButton
                 .Skip(1)
-                .Subscribe(x =>
+                .Subscribe(_ =>
                 {
                     if (_canChangeMode)
                     {
@@ -61,7 +61,7 @@ namespace Roulette.OutGame
             
             OutGameInput.Instance.LeftButton
                 .Skip(1)
-                .Subscribe(x =>
+                .Subscribe(_ =>
                 {
                     if (_canChangeMode)
                     {
