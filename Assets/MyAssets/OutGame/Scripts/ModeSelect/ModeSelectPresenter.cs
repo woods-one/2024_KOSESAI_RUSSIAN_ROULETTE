@@ -25,7 +25,7 @@ namespace Roulette.OutGame
         
         OutGameWindowType _windowType = OutGameWindowType.ModeSelect;
         
-        void Start()
+        public void Initialize()
         {
             _model = new ModeSelectModel();
             _view.Initialize();

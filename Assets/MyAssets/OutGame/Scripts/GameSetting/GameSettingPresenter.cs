@@ -9,6 +9,11 @@ namespace Roulette.OutGame
         
         public bool IsAnimation => _isAnimation;
 
+        public void Initialize()
+        {
+            
+        }
+
         public void Show()
         {
             

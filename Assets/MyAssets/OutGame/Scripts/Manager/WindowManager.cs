@@ -50,7 +50,9 @@ namespace Roulette.OutGame
             switch (windowType)
             {
                 case OutGameWindowType.ModeSelect:
-                    _openWindows.Add(Instantiate(_modeSelectPrefab).GetComponent<IWindowUI>());
+                    var inst = Instantiate(_modeSelectPrefab).GetComponent<IWindowUI>();
+                    _openWindows.Add(inst);
+                    inst.Initialize();
                     HidePreviousWindow();
                     OpenWindowTypes.Add(OutGameWindowType.ModeSelect);
                     break;
