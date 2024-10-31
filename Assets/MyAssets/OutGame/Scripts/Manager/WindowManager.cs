@@ -16,16 +16,21 @@ namespace Roulette.OutGame
     
     public class WindowManager : MonoBehaviour
     {
-        private List<IWindowUI> _openWindows = new ();
-        public List<IWindowUI> OpenWindows => _openWindows;
+        private List<IWindowUI> _openedWindows = new ();
+        public List<IWindowUI> OpenedWindows => _openedWindows;
         
-        private List<OutGameWindowType> _openWindowTypes = new ();
-        public List<OutGameWindowType> OpenWindowTypes => _openWindowTypes;
+        private List<GameObject> _openedObjects = new ();
+        public List<GameObject> OpenedObjects => _openedObjects;
         
-        public OutGameWindowType CurrentWindowType => _openWindowTypes[_openWindows.Count - 1];
+        private List<OutGameWindowType> _openedWindowTypes = new ();
+        public List<OutGameWindowType> OpenedWindowTypes => _openedWindowTypes;
+        
+        public OutGameWindowType CurrentWindowType => _openedWindowTypes[_openedWindows.Count - 1];
 
         [SerializeField]
         private GameObject _modeSelectPrefab;
+        [SerializeField]
+        private GameObject _gameSettingPrefab;
         
         private static WindowManager instance;
         public static WindowManager Instance
@@ -40,32 +45,47 @@ namespace Roulette.OutGame
             }
         }
 
-        private void Start()
+        private async UniTaskVoid Start()
         {
             OpenWindow(OutGameWindowType.ModeSelect);
         }
 
         public void OpenWindow(OutGameWindowType windowType, bool isSolo = false)
         {
+            GameObject inst = null;
+            IWindowUI instWin = null;
             switch (windowType)
-            {
+            { 
                 case OutGameWindowType.ModeSelect:
-                    var inst = Instantiate(_modeSelectPrefab).GetComponent<IWindowUI>();
-                    _openWindows.Add(inst);
-                    inst.Initialize();
+                    inst = Instantiate(_modeSelectPrefab);
+                    _openedObjects.Add(inst);
+                    
+                    instWin = inst.GetComponent<IWindowUI>();
+                    _openedWindows.Add(instWin);
+                    
+                    OpenedWindowTypes.Add(OutGameWindowType.ModeSelect);
                     HidePreviousWindow();
-                    OpenWindowTypes.Add(OutGameWindowType.ModeSelect);
+                    
+                    instWin.Initialize();
                     break;
                 case OutGameWindowType.GameSetting:
-                    OpenWindowTypes.Add(OutGameWindowType.GameSetting);
+                    inst = Instantiate(_gameSettingPrefab);
+                    _openedObjects.Add(inst);
+                    
+                    instWin = inst.GetComponent<IWindowUI>();
+                    _openedWindows.Add(instWin);
+                    
+                    OpenedWindowTypes.Add(OutGameWindowType.GameSetting);
                     HidePreviousWindow();
+                    
+                    instWin.Initialize();
                     break;
                 case OutGameWindowType.ItemSwitch:
-                    OpenWindowTypes.Add(OutGameWindowType.ItemSwitch);
+                    OpenedWindowTypes.Add(OutGameWindowType.ItemSwitch);
                     HidePreviousWindow();
                     break;
                 case OutGameWindowType.HowToPlay:
-                    OpenWindowTypes.Add(OutGameWindowType.HowToPlay);
+                    OpenedWindowTypes.Add(OutGameWindowType.HowToPlay);
                     HidePreviousWindow();
                     break;
                 default:
@@ -75,9 +95,29 @@ namespace Roulette.OutGame
 
         private void HidePreviousWindow()
         {
-            if (_openWindows.Count - 2 >= 0)
+            if (_openedWindows.Count - 2 >= 0)
             {
-                _openWindows[_openWindows.Count - 2].Hide();
+                _openedWindows[_openedWindows.Count - 2].Hide();
+            }
+        }
+
+        public void BackPreviousWindow()
+        {
+            if (_openedWindows.Count - 2 < 0)
+            {
+                //タイトルに戻る
+            }
+            else
+            {
+                _openedWindows.RemoveAt(_openedWindows.Count - 1);
+                
+                _openedWindowTypes.RemoveAt(_openedWindowTypes.Count - 1);
+                
+                Destroy(_openedObjects[_openedObjects.Count - 1]);
+                
+                Debug.Log(_openedObjects[_openedWindows.Count - 1].name);
+                
+                _openedWindows[_openedWindows.Count - 1].Show();
             }
         }
         

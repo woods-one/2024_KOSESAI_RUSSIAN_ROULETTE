@@ -51,7 +51,7 @@ namespace Roulette.OutGame
                             _model.ChangeLeftMode();
                         }
                     }
-                });
+                }).AddTo(this);
             
             OutGameInput.Instance.RightButton
                 .Skip(1)
@@ -63,7 +63,7 @@ namespace Roulette.OutGame
                         _model.ChangeRightMode();
                         CanChangeMode().Forget();
                     }
-                });
+                }).AddTo(this);
             
             OutGameInput.Instance.LeftButton
                 .Skip(1)
@@ -75,7 +75,7 @@ namespace Roulette.OutGame
                         _model.ChangeLeftMode();
                         CanChangeMode().Forget();
                     }
-                });
+                }).AddTo(this);
         }
 
         async UniTask CanChangeMode()
@@ -86,7 +86,7 @@ namespace Roulette.OutGame
         }
 
         public void Show()
-        {
+        { 
             _view.Show();
         }
         
