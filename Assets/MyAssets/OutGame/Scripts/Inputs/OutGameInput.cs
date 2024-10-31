@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Roulette.Utility.Inputs
 {
+    /// <summary>
+    /// アウトゲームの入力検知
+    /// </summary>
     public class OutGameInput : MonoBehaviour,IOutGameInputEventProvider
     {
         private ReactiveProperty<bool> _rightButton = new ();

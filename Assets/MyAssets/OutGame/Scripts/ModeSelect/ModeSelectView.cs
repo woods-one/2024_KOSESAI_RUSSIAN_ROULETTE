@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Roulette.OutGame
 {
+    /// <summary>
+    /// ModeSelectのビュー
+    /// </summary>
     public class ModeSelectView : MonoBehaviour
     {
         [SerializeField]

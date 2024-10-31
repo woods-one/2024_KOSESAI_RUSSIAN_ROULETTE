@@ -1,9 +1,11 @@
 using R3;
 using Roulette.Utility;
-using UnityEngine;
 
 namespace Roulette.OutGame
 {
+    /// <summary>
+    /// ModeSelectのモデル
+    /// </summary>
     public class ModeSelectModel
     {
         private readonly ReactiveProperty<int> _modeIndex = new ();

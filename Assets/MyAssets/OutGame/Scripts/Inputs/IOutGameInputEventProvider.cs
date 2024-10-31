@@ -3,7 +3,7 @@ using R3;
 namespace Roulette.Utility.Inputs
 {
     /// <summary>
-    /// 
+    /// アウトゲームの入力インターフェース
     /// </summary>
     public interface IOutGameInputEventProvider
     {

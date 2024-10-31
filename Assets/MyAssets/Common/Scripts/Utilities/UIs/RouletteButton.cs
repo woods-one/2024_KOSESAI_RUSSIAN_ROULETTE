@@ -3,6 +3,10 @@ using UnityEngine.UI;
 
 namespace Roulette.Utility.UI
 {
+    /// <summary>
+    /// 画面のボタンの汎用的なクラス
+    /// ボタンと言いつつ実際に触ることはできない
+    /// </summary>
     public class RouletteButton : MonoBehaviour
     {
         [SerializeField]
