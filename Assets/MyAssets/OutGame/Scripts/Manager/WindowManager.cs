@@ -16,8 +16,8 @@ namespace Roulette.OutGame
     
     public class WindowManager : MonoBehaviour
     {
-        private List<IWindowUI> _openedWindows = new ();
-        public List<IWindowUI> OpenedWindows => _openedWindows;
+        private List<IOutGameWindowUI> _openedWindows = new ();
+        public List<IOutGameWindowUI> OpenedWindows => _openedWindows;
         
         private List<GameObject> _openedObjects = new ();
         public List<GameObject> OpenedObjects => _openedObjects;
@@ -50,35 +50,35 @@ namespace Roulette.OutGame
             OpenWindow(OutGameWindowType.ModeSelect);
         }
 
-        public void OpenWindow(OutGameWindowType windowType, bool isSolo = false)
+        public void OpenWindow(OutGameWindowType windowType, OutGameWindowInfo outGameWindowInfo = null)
         {
             GameObject inst = null;
-            IWindowUI instWin = null;
+            IOutGameWindowUI instWin = null;
             switch (windowType)
             { 
                 case OutGameWindowType.ModeSelect:
                     inst = Instantiate(_modeSelectPrefab);
                     _openedObjects.Add(inst);
                     
-                    instWin = inst.GetComponent<IWindowUI>();
+                    instWin = inst.GetComponent<IOutGameWindowUI>();
                     _openedWindows.Add(instWin);
                     
                     OpenedWindowTypes.Add(OutGameWindowType.ModeSelect);
                     HidePreviousWindow();
                     
-                    instWin.Initialize();
+                    instWin.Initialize(outGameWindowInfo);
                     break;
                 case OutGameWindowType.GameSetting:
                     inst = Instantiate(_gameSettingPrefab);
                     _openedObjects.Add(inst);
                     
-                    instWin = inst.GetComponent<IWindowUI>();
+                    instWin = inst.GetComponent<IOutGameWindowUI>();
                     _openedWindows.Add(instWin);
                     
                     OpenedWindowTypes.Add(OutGameWindowType.GameSetting);
                     HidePreviousWindow();
                     
-                    instWin.Initialize();
+                    instWin.Initialize(outGameWindowInfo);
                     break;
                 case OutGameWindowType.ItemSwitch:
                     OpenedWindowTypes.Add(OutGameWindowType.ItemSwitch);

@@ -9,7 +9,7 @@ namespace Roulette.OutGame
     /// <summary>
     /// ModeSelectのプレゼンター
     /// </summary>
-    public class ModeSelectPresenter : MonoBehaviour, IWindowUI
+    public class ModeSelectPresenter : MonoBehaviour, IOutGameWindowUI
     {
         private ModeSelectModel _model;
         
@@ -25,7 +25,7 @@ namespace Roulette.OutGame
         
         OutGameWindowType _windowType = OutGameWindowType.ModeSelect;
         
-        public void Initialize()
+        public void Initialize(OutGameWindowInfo outGameWindowInfo = null)
         {
             _model = new ModeSelectModel();
             _view.Initialize();

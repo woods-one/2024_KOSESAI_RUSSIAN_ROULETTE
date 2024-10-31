@@ -2,14 +2,14 @@ using UnityEngine;
 
 namespace Roulette.OutGame
 {
-    public class GameSettingPresenter : MonoBehaviour, IWindowUI
+    public class GameSettingPresenter : MonoBehaviour, IOutGameWindowUI
     {
         [SerializeField]
         private bool _isAnimation;
         
         public bool IsAnimation => _isAnimation;
 
-        public void Initialize()
+        public void Initialize(OutGameWindowInfo outGameWindowInfo)
         {
             
         }
