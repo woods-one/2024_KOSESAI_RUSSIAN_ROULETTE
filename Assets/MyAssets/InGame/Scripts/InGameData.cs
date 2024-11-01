@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class InGameData : MonoBehaviour
+namespace Roulette.InGame
 {
-    // Start is called before the first frame update
-    void Start()
+    public class InGameData
     {
-        
-    }
+        private int _lifeNum;
+        public int LifeNum => _lifeNum;
+            
+        private int _playerNum;
+        public int PlayerNum => _playerNum;
 
-    // Update is called once per frame
-    void Update()
-    {
+        private bool _useItem;
+        public bool UseItem => _useItem;
         
+        public InGameData(int lifeNum, int playerNum, bool useItem)
+        {
+            _lifeNum = lifeNum;
+            _playerNum = playerNum;
+            _useItem = useItem;
+        }
     }
 }

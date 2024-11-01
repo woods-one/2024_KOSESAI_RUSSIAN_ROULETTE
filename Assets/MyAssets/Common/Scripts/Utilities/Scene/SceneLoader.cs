@@ -1,3 +1,4 @@
+using Roulette.InGame;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,9 @@ namespace Roulette.Utility.Scenes
     }
     public class SceneLoader : MonoBehaviour
     {
+        private InGameData _inGameData = new InGameData(Settings.MinLife, Settings.SoloPlayer, Settings.UseItemDefault);
+        public InGameData InGameData => _inGameData;
+        
         private static SceneLoader _instance;
 
         public static SceneLoader Instance
@@ -54,6 +58,11 @@ namespace Roulette.Utility.Scenes
         public void LoadScene(Scenes scene)
         {
             SceneManager.LoadScene(scene.ToString());
+        }
+
+        public void SetInGameData(InGameData inGameData)
+        {
+            _inGameData = inGameData;
         }
     }
 }
