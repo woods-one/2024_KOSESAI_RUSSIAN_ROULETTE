@@ -54,7 +54,7 @@ namespace Roulette.OutGame
                     }
                 }).AddTo(this);
             
-            OutGameInput.Instance.RightButton
+            GameInput.Instance.RightButton
                 .Skip(1)
                 .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>
@@ -63,7 +63,7 @@ namespace Roulette.OutGame
                     CanChangeMode().Forget();
                 }).AddTo(this);
             
-            OutGameInput.Instance.LeftButton
+            GameInput.Instance.LeftButton
                 .Skip(1)
                 .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>
@@ -72,17 +72,16 @@ namespace Roulette.OutGame
                     CanChangeMode().Forget();
                 }).AddTo(this);
             
-            OutGameInput.Instance.DecideButton
+            GameInput.Instance.DecideButton
                 .Skip(1)
                 .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>
                 {
-                    Debug.Log("hoge");
                     WindowManager.Instance.OpenWindow(OutGameWindowType.GameSetting,new OutGameWindowInfo(_model.ModeIndex.CurrentValue == 0));
                     CanChangeMode().Forget();
                 }).AddTo(this);
             
-            OutGameInput.Instance.CancelButton
+            GameInput.Instance.CancelButton
                 .Skip(1)
                 .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>

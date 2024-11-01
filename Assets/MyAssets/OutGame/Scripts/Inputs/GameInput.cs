@@ -7,7 +7,7 @@ namespace Roulette.Utility.Inputs
     /// <summary>
     /// アウトゲームの入力検知
     /// </summary>
-    public class OutGameInput : MonoBehaviour,IOutGameInputEventProvider
+    public class GameInput : MonoBehaviour,IOutGameInputEventProvider
     {
         private ReactiveProperty<bool> _rightButton = new ();
         private ReactiveProperty<bool> _leftButton = new ();
@@ -46,16 +46,30 @@ namespace Roulette.Utility.Inputs
             get { return _decideButton; }
         }
         
-        private static OutGameInput instance;
-        public static OutGameInput Instance
+        private static GameInput _instance;
+
+        public static GameInput Instance
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
                     SetupInstance();
                 }
-                return instance;
+                return _instance;
+            }
+        }
+
+        private void Awake()
+        {
+            if (_instance == null)
+            {
+                _instance = this;
+                DontDestroyOnLoad(this.gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
             }
         }
         
@@ -94,13 +108,13 @@ namespace Roulette.Utility.Inputs
         
         private static void SetupInstance()
         {
-            instance = FindObjectOfType<OutGameInput>();
+            _instance = FindObjectOfType<GameInput>();
 	
-            if (instance == null)
+            if (_instance == null)
             {
                 GameObject gameObj = new GameObject();
-                gameObj.name = "OutGameInput";
-                instance = gameObj.AddComponent<OutGameInput>();
+                gameObj.name = "GameInput";
+                _instance = gameObj.AddComponent<GameInput>();
                 DontDestroyOnLoad(gameObj);
             }
         }

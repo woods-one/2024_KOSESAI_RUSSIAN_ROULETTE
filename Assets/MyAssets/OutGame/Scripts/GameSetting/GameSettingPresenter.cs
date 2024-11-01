@@ -80,7 +80,7 @@ namespace Roulette.OutGame
                     CanChangeMode().Forget();
                 }).AddTo(this);
             
-            OutGameInput.Instance.DownButton
+            GameInput.Instance.DownButton
                 .Skip(1)
                 .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
@@ -89,7 +89,7 @@ namespace Roulette.OutGame
                     CanChangeMode().Forget();
                 }).AddTo(this);
             
-            OutGameInput.Instance.UpButton
+            GameInput.Instance.UpButton
                 .Skip(1)
                 .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
@@ -98,7 +98,7 @@ namespace Roulette.OutGame
                     CanChangeMode().Forget();
                 }).AddTo(this);
             
-            OutGameInput.Instance.RightButton
+            GameInput.Instance.RightButton
                 .Skip(1)
                 .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
@@ -118,7 +118,7 @@ namespace Roulette.OutGame
                     }
                 }).AddTo(this);
             
-            OutGameInput.Instance.LeftButton
+            GameInput.Instance.LeftButton
                 .Skip(1)
                 .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
@@ -138,7 +138,7 @@ namespace Roulette.OutGame
                     }
                 }).AddTo(this);
             
-            OutGameInput.Instance.DecideButton
+            GameInput.Instance.DecideButton
                 .Skip(1)
                 .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
@@ -151,7 +151,7 @@ namespace Roulette.OutGame
                     }
                 }).AddTo(this);
             
-            OutGameInput.Instance.CancelButton
+            GameInput.Instance.CancelButton
                 .Skip(1)
                 .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
