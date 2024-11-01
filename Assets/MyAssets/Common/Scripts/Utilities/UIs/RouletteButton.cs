@@ -20,6 +20,9 @@ namespace Roulette.Utility.UI
         [SerializeField]
         private Image _disabledImage;
         
+        private bool _useSelectedAnimation;
+        public bool UseSelectedAnimation => _useSelectedAnimation;
+        
         private bool _isSelected;
         public bool IsSelected => _isSelected;
         

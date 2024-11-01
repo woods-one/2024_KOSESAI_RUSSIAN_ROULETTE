@@ -9,9 +9,11 @@ namespace Roulette.OutGame
         
         public bool IsAnimation => _isAnimation;
 
+        private bool _isSoloPlay;
+
         public void Initialize(OutGameWindowInfo outGameWindowInfo)
         {
-            
+            _isSoloPlay = outGameWindowInfo.IsSoloPlay;
         }
 
         public void Show()
