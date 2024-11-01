@@ -31,7 +31,7 @@ namespace Roulette.OutGame
             _isSoloPlay = outGameWindowInfo.IsSoloPlay;
             _canMove = true;
 
-            _model = new GameSettingModel();
+            _model = new GameSettingModel(_isSoloPlay);
             _view.Initialize(_isSoloPlay);
             
             Bind();
@@ -55,34 +55,44 @@ namespace Roulette.OutGame
                         }
                     }
                 }).AddTo(this);
+
+            _model.SelectLifeNum
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Subscribe(x =>
+                {
+                    _view.SetStepperText(x,true);
+                    CanChangeMode().Forget();
+                }).AddTo(this);
+            
+            _model.SelectPlayNum
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Subscribe(x =>
+                {
+                    _view.SetStepperText(x,false);
+                    CanChangeMode().Forget();
+                }).AddTo(this);
             
             OutGameInput.Instance.DownButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
                 {
-                    if (_canMove)
-                    {
-                        _model.SelectDown();
-                        CanChangeMode().Forget();
-                    }
+                    _model.SelectDown();
+                    CanChangeMode().Forget();
                 }).AddTo(this);
             
             OutGameInput.Instance.UpButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
                 {
-                    if (_canMove)
-                    {
-                        _model.SelectUp();
-                        CanChangeMode().Forget();
-                    }
+                    _model.SelectUp();
+                    CanChangeMode().Forget();
                 }).AddTo(this);
             
             OutGameInput.Instance.RightButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
                 {
                     if (_view.Parts[_model.Index.CurrentValue].GetType() == typeof(RouletteStepper))
@@ -95,12 +105,14 @@ namespace Roulette.OutGame
                         {
                             _model.AddPlayNum();
                         }
+                        
+                        CanChangeMode().Forget();
                     }
                 }).AddTo(this);
             
             OutGameInput.Instance.LeftButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
                 {
                     if (_view.Parts[_model.Index.CurrentValue].GetType() == typeof(RouletteStepper))
@@ -113,6 +125,8 @@ namespace Roulette.OutGame
                         {
                             _model.SubtractPlayNum();
                         }
+                        
+                        CanChangeMode().Forget();
                     }
                 }).AddTo(this);
         }

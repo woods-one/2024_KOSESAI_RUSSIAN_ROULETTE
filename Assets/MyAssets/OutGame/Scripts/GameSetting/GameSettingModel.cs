@@ -17,10 +17,17 @@ namespace Roulette.OutGame
         private ReactiveProperty<int> _selectLifeNum = new ();
         public ReadOnlyReactiveProperty<int> SelectLifeNum => _selectLifeNum;
 
-        public GameSettingModel()
+        public GameSettingModel(bool soloPlay)
         {
             _moveDown = true;
-            _selectPlayNum.Value = Settings.MinMultiPlayers;
+            if (soloPlay)
+            {
+                _selectPlayNum.Value = Settings.SoloPlayer;
+            }
+            else
+            {
+                _selectPlayNum.Value = Settings.MinMultiPlayers;
+            }
             _selectLifeNum.Value = Settings.MinLife;
         }
 

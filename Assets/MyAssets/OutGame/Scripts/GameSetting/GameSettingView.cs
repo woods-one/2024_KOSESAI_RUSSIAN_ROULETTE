@@ -27,8 +27,6 @@ namespace Roulette.OutGame
         
         public void Initialize(bool isSoloPlay)
         {
-            SetMode(isSoloPlay);
-            
             foreach (var _stepper in _steppers)
             {
                 _parts.Add(_stepper);
@@ -46,6 +44,8 @@ namespace Roulette.OutGame
             {
                 part.Initialize();
             }
+            
+            SetMode(isSoloPlay);
             
             foreach (var part in _parts)
             {
@@ -69,6 +69,8 @@ namespace Roulette.OutGame
 
         private void SetMode(bool isSoloPlay)
         {
+            _steppers[1].SetDisabled(isSoloPlay);
+            
             if (isSoloPlay)
             {
                 _modeBackgroundImage.color = RouletteConst.SoloModeColor;
@@ -78,6 +80,39 @@ namespace Roulette.OutGame
             {
                 _modeBackgroundImage.color = RouletteConst.MultiModeColor;
                 _modeText.text = RouletteText.MultiMode;
+            }
+        }
+
+        public void SetStepperText(int num,bool isLife)
+        {
+            
+            if (isLife)
+            {
+                _steppers[0].SetCanMoveColor();
+                
+                _steppers[0].SetText(num.ToString());
+                if (num == Settings.MaxLife)
+                {
+                    _steppers[0].SetCantMoveColor(true);
+                }
+                else if (num == Settings.MinLife)
+                {
+                    _steppers[0].SetCantMoveColor(false);
+                }
+            }
+            else
+            {
+                _steppers[1].SetCanMoveColor();
+                
+                _steppers[1].SetText(num.ToString());
+                if (num == Settings.MaxMultiPlayers)
+                {
+                    _steppers[1].SetCantMoveColor(true);
+                }
+                else if (num == Settings.MinMultiPlayers)
+                {
+                    _steppers[1].SetCantMoveColor(false);
+                }
             }
         }
         

@@ -49,7 +49,7 @@ namespace Roulette.OutGame
 
         private async UniTaskVoid Start()
         {
-            OpenWindow(OutGameWindowType.GameSetting,new OutGameWindowInfo(true));
+            OpenWindow(OutGameWindowType.GameSetting,new OutGameWindowInfo(false));
         }
 
         public void OpenWindow(OutGameWindowType windowType, OutGameWindowInfo outGameWindowInfo = null)

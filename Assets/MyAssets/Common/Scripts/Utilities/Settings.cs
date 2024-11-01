@@ -12,6 +12,7 @@ namespace Roulette.Utility
         public const int GameSettingNum = 4;
         public const int MaxMultiPlayers = 5;
         public const int MinMultiPlayers = 2;
+        public const int SoloPlayer = 1;
         public const int MaxLife = 5;
         public const int MinLife = 1;
     }
