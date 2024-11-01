@@ -1,9 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Roulette.Utility.Scenes
 {
+    public enum Scenes
+    {
+        Title,
+        OutGame,
+        InGame
+    }
     public class SceneLoader : MonoBehaviour
     {
         private static SceneLoader _instance;
@@ -44,6 +49,11 @@ namespace Roulette.Utility.Scenes
                 _instance = gameObj.AddComponent<SceneLoader>();
                 DontDestroyOnLoad(gameObj);
             }
+        }
+
+        public void LoadScene(Scenes scene)
+        {
+            SceneManager.LoadScene(scene.ToString());
         }
     }
 }
