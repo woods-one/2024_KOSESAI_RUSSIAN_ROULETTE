@@ -1,3 +1,4 @@
+using Roulette.Utility.UI.Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ namespace Roulette.Utility.UI
     /// 画面のボタンの汎用的なクラス
     /// ボタンと言いつつ実際に触ることはできない
     /// </summary>
-    public class RouletteButton : MonoBehaviour
+    public class RouletteButton : MonoBehaviour,IOutGameWindowParts
     {
         [SerializeField]
         private Image _mainImage;
@@ -19,6 +20,10 @@ namespace Roulette.Utility.UI
         
         [SerializeField]
         private Image _disabledImage;
+        
+        [SerializeField]
+        private bool _useSelectedAnimation;
+        public bool UseSelectedAnimation => _useSelectedAnimation;
         
         private bool _isSelected;
         public bool IsSelected => _isSelected;

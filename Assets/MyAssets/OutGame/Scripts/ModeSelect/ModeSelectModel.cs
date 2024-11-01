@@ -21,7 +21,7 @@ namespace Roulette.OutGame
 
         public void ChangeRightMode()
         {
-            if (_modeIndex.Value + 1 >= RouletteConst.MAX_MODE)
+            if (_modeIndex.Value + 1 >= Settings.MaxMode)
             {
                 _modeIndex.Value = 0;
             }
@@ -37,7 +37,7 @@ namespace Roulette.OutGame
         {
             if (_modeIndex.Value - 1 <=  -1)
             {
-                _modeIndex.Value = RouletteConst.MAX_MODE - 1;
+                _modeIndex.Value = Settings.MaxMode - 1;
             }
             else
             {

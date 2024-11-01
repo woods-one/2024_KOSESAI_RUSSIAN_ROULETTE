@@ -2,6 +2,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Roulette.Utility.Inputs;
 using R3;
+using Roulette.Utility.UI.Interface;
 using UnityEngine;
 
 namespace Roulette.OutGame
@@ -9,7 +10,7 @@ namespace Roulette.OutGame
     /// <summary>
     /// ModeSelectのプレゼンター
     /// </summary>
-    public class ModeSelectPresenter : MonoBehaviour, IWindowUI
+    public class ModeSelectPresenter : MonoBehaviour, IOutGameWindowUI
     {
         private ModeSelectModel _model;
         
@@ -25,7 +26,7 @@ namespace Roulette.OutGame
         
         OutGameWindowType _windowType = OutGameWindowType.ModeSelect;
         
-        public void Initialize()
+        public void Initialize(OutGameWindowInfo outGameWindowInfo = null)
         {
             _model = new ModeSelectModel();
             _view.Initialize();
@@ -55,26 +56,39 @@ namespace Roulette.OutGame
             
             OutGameInput.Instance.RightButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>
                 {
-                    if (_canChangeMode)
-                    {
-                        _model.ChangeRightMode();
-                        CanChangeMode().Forget();
-                    }
+                    _model.ChangeRightMode();
+                    CanChangeMode().Forget();
                 }).AddTo(this);
             
             OutGameInput.Instance.LeftButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>
                 {
-                    if (_canChangeMode)
-                    {
-                        _model.ChangeLeftMode();
-                        CanChangeMode().Forget();
-                    }
+                    _model.ChangeLeftMode();
+                    CanChangeMode().Forget();
+                }).AddTo(this);
+            
+            OutGameInput.Instance.DecideButton
+                .Skip(1)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
+                .Subscribe(_ =>
+                {
+                    Debug.Log("hoge");
+                    WindowManager.Instance.OpenWindow(OutGameWindowType.GameSetting,new OutGameWindowInfo(_model.ModeIndex.CurrentValue == 0));
+                    CanChangeMode().Forget();
+                }).AddTo(this);
+            
+            OutGameInput.Instance.CancelButton
+                .Skip(1)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
+                .Subscribe(_ =>
+                {
+                    WindowManager.Instance.BackPreviousWindow();
+                    CanChangeMode().Forget();
                 }).AddTo(this);
         }
 
