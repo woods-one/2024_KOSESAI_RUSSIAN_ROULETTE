@@ -150,6 +150,15 @@ namespace Roulette.OutGame
                         CanChangeMode().Forget();
                     }
                 }).AddTo(this);
+            
+            OutGameInput.Instance.CancelButton
+                .Skip(1)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
+                .Subscribe(_ =>
+                {
+                    WindowManager.Instance.BackPreviousWindow();
+                    CanChangeMode().Forget();
+                }).AddTo(this);
         }
         
         async UniTask CanChangeMode()

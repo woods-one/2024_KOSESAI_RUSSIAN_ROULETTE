@@ -56,26 +56,39 @@ namespace Roulette.OutGame
             
             OutGameInput.Instance.RightButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>
                 {
-                    if (_canChangeMode)
-                    {
-                        _model.ChangeRightMode();
-                        CanChangeMode().Forget();
-                    }
+                    _model.ChangeRightMode();
+                    CanChangeMode().Forget();
                 }).AddTo(this);
             
             OutGameInput.Instance.LeftButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>
                 {
-                    if (_canChangeMode)
-                    {
-                        _model.ChangeLeftMode();
-                        CanChangeMode().Forget();
-                    }
+                    _model.ChangeLeftMode();
+                    CanChangeMode().Forget();
+                }).AddTo(this);
+            
+            OutGameInput.Instance.DecideButton
+                .Skip(1)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
+                .Subscribe(_ =>
+                {
+                    Debug.Log("hoge");
+                    WindowManager.Instance.OpenWindow(OutGameWindowType.GameSetting,new OutGameWindowInfo(_model.ModeIndex.CurrentValue == 0));
+                    CanChangeMode().Forget();
+                }).AddTo(this);
+            
+            OutGameInput.Instance.CancelButton
+                .Skip(1)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
+                .Subscribe(_ =>
+                {
+                    WindowManager.Instance.BackPreviousWindow();
+                    CanChangeMode().Forget();
                 }).AddTo(this);
         }
 
