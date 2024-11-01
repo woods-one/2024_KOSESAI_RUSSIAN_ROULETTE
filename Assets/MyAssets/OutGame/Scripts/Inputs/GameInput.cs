@@ -7,7 +7,7 @@ namespace Roulette.Utility.Inputs
     /// <summary>
     /// アウトゲームの入力検知
     /// </summary>
-    public class GameInput : MonoBehaviour,IOutGameInputEventProvider
+    public class GameInput : MonoBehaviour,IGameInputEventProvider
     {
         private ReactiveProperty<bool> _rightButton = new ();
         private ReactiveProperty<bool> _leftButton = new ();

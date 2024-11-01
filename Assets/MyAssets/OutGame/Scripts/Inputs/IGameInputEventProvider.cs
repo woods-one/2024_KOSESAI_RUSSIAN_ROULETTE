@@ -5,7 +5,7 @@ namespace Roulette.Utility.Inputs
     /// <summary>
     /// アウトゲームの入力インターフェース
     /// </summary>
-    public interface IOutGameInputEventProvider
+    public interface IGameInputEventProvider
     {
         ReadOnlyReactiveProperty<bool> RightButton { get; }
         ReadOnlyReactiveProperty<bool> LeftButton { get; }
