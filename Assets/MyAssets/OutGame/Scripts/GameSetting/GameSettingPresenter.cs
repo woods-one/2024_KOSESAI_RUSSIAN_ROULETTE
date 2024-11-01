@@ -72,6 +72,14 @@ namespace Roulette.OutGame
                     CanChangeMode().Forget();
                 }).AddTo(this);
             
+            _model.UseItem
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Subscribe(x =>
+                {
+                    _view.SetCheckUseItem(x);
+                    CanChangeMode().Forget();
+                }).AddTo(this);
+            
             OutGameInput.Instance.DownButton
                 .Skip(1)
                 .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
@@ -125,6 +133,19 @@ namespace Roulette.OutGame
                         {
                             _model.SubtractPlayNum();
                         }
+                        
+                        CanChangeMode().Forget();
+                    }
+                }).AddTo(this);
+            
+            OutGameInput.Instance.DecideButton
+                .Skip(1)
+                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
+                .Subscribe(_ =>
+                {
+                    if (_view.Parts[_model.Index.CurrentValue].GetType() == typeof(RouletteCheckBox))
+                    {
+                        _model.SetUseItem();
                         
                         CanChangeMode().Forget();
                     }

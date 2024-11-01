@@ -115,6 +115,11 @@ namespace Roulette.OutGame
                 }
             }
         }
+
+        public void SetCheckUseItem(bool useItem)
+        {
+            _checkBoxes[0].SetChecked(useItem);
+        }
         
         public void Show()
         {

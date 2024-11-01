@@ -16,6 +16,9 @@ namespace Roulette.OutGame
         
         private ReactiveProperty<int> _selectLifeNum = new ();
         public ReadOnlyReactiveProperty<int> SelectLifeNum => _selectLifeNum;
+        
+        private ReactiveProperty<bool> _useItem = new ();
+        public ReadOnlyReactiveProperty<bool> UseItem => _useItem;
 
         public GameSettingModel(bool soloPlay)
         {
@@ -85,6 +88,11 @@ namespace Roulette.OutGame
             }
 
             _moveDown = false;
+        }
+
+        public void SetUseItem()
+        {
+            _useItem.Value = _useItem.Value == false;
         }
 
         public void SetIndex(int modeIndex)
