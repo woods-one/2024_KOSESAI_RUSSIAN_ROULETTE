@@ -24,13 +24,16 @@ namespace Roulette.OutGame
             {
                 _buttons[0].SetDisabled(true);
             }
+            // _buttons[0].SetDisabled(Settings.CanSoloMode == false); 視認性的にどうだろう
             
             foreach (var _button in _buttons)
             {
                 if (_button.IsDisabled == false && _button.IsSelected == false)
                 {
                     _button.SetSelected(true);
+                    break;
                 }
+                // _button.SetSelected(_button.IsDisabled == false && _button.IsSelected == false); こっちも
             }
         }
 

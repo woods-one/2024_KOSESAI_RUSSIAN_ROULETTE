@@ -9,5 +9,10 @@ namespace Roulette.Utility
         public const bool CanSoloMode = true;
         public const int MaxMode = 2;
         public const bool UseItemDefault = false;
+        public const int GameSettingNum = 4;
+        public const int MaxMultiPlayers = 5;
+        public const int MinMultiPlayers = 2;
+        public const int MaxLife = 5;
+        public const int MinLife = 1;
     }
 }
