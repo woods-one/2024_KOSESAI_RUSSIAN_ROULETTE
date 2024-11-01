@@ -15,6 +15,8 @@ namespace Roulette.Utility.Inputs
         private ReactiveProperty<bool> _downButton = new ();
         private ReactiveProperty<bool> _cancelButton = new ();
         private ReactiveProperty<bool> _decideButton = new ();
+        private ReactiveProperty<bool> _anyButton = new ();
+        
 
         public ReadOnlyReactiveProperty<bool> RightButton
         {
@@ -44,6 +46,11 @@ namespace Roulette.Utility.Inputs
         public ReadOnlyReactiveProperty<bool> DecideButton
         {
             get { return _decideButton; }
+        }
+
+        public ReadOnlyReactiveProperty<bool> AnyButton
+        {
+            get { return _anyButton; }
         }
         
         private static GameInput _instance;
@@ -104,6 +111,11 @@ namespace Roulette.Utility.Inputs
                 .Select(_ => Input.GetKeyDown(KeyCode.S))
                 .DistinctUntilChanged()
                 .Subscribe(x => _cancelButton.Value = x);
+            
+            this.UpdateAsObservable()
+                .Select(_ => Input.anyKeyDown)
+                .DistinctUntilChanged()
+                .Subscribe(x => _anyButton.Value = x);
         }
         
         private static void SetupInstance()
