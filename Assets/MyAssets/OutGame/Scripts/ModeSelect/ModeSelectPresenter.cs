@@ -2,6 +2,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Roulette.Utility.Inputs;
 using R3;
+using Roulette.Utility.UI.Interface;
 using UnityEngine;
 
 namespace Roulette.OutGame

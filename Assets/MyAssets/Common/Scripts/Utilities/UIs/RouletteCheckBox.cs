@@ -1,14 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using Roulette.Utility.UI.Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Roulette.Utility.UI
 {
-    /// <summary>
-    /// 画面のボタンの汎用的なクラス
-    /// ボタンと言いつつ実際に触ることはできない
-    /// </summary>
-    public class RouletteButton : MonoBehaviour,IOutGameWindowParts
+    public class RouletteCheckBox : MonoBehaviour,IOutGameWindowParts
     {
         [SerializeField]
         private Image _mainImage;
@@ -22,8 +20,14 @@ namespace Roulette.Utility.UI
         private Image _disabledImage;
         
         [SerializeField]
+        private Image _checkedImage;
+        
+        [SerializeField]
         private bool _useSelectedAnimation;
         public bool UseSelectedAnimation => _useSelectedAnimation;
+
+        private bool _isChecked;
+        public bool IsChecked => _isChecked;
         
         private bool _isSelected;
         public bool IsSelected => _isSelected;
@@ -37,14 +41,24 @@ namespace Roulette.Utility.UI
 
             _isDisabled = false;
             
+            _isChecked = Settings.UseItemDefault;
+            
             _disabledImage.gameObject.SetActive(false);
 
             SetSelected(false);
         }
 
+        public void SetChecked(bool isChecked)
+        {
+            _isChecked = isChecked;
+            
+            _checkedImage.gameObject.SetActive(_isChecked);
+        }
+
         public void Show()
         {
             _mainImage.gameObject.SetActive(true);
+            _checkedImage.gameObject.SetActive(_isChecked);
             _selectImage.gameObject.SetActive(_isSelected);
             _disabledImage.gameObject.SetActive(_isDisabled);
         }
@@ -52,6 +66,7 @@ namespace Roulette.Utility.UI
         public void Hide()
         {
             _mainImage.gameObject.SetActive(false);
+            _checkedImage.gameObject.SetActive(false);
             _selectImage.gameObject.SetActive(false);
             _disabledImage.gameObject.SetActive(false);
         }

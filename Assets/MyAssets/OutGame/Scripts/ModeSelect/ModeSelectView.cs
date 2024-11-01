@@ -20,7 +20,7 @@ namespace Roulette.OutGame
                 _button.Initialize();
             }
 
-            if (Settings.CAN_SOLO_MODE == false)
+            if (Settings.CanSoloMode == false)
             {
                 _buttons[0].SetDisabled(true);
             }

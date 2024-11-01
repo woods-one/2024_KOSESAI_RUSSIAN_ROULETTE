@@ -4,6 +4,9 @@ namespace Roulette.OutGame
 {
     public class GameSettingModel
     {
-        
+        public GameSettingModel()
+        {
+            
+        }
     }
 }

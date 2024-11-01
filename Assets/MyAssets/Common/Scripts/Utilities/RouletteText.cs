@@ -1,18 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class RouletteText : MonoBehaviour
+public static class RouletteText
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public static readonly string SoloMode = "ソロモード";
+    public static readonly string MultiMode = "マルチモード";
 }

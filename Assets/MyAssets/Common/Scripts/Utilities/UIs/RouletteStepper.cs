@@ -4,11 +4,7 @@ using UnityEngine.UI;
 
 namespace Roulette.Utility.UI
 {
-    /// <summary>
-    /// 画面のボタンの汎用的なクラス
-    /// ボタンと言いつつ実際に触ることはできない
-    /// </summary>
-    public class RouletteButton : MonoBehaviour,IOutGameWindowParts
+    public class RouletteStepper : MonoBehaviour, IOutGameWindowParts
     {
         [SerializeField]
         private Image _mainImage;
@@ -24,6 +20,15 @@ namespace Roulette.Utility.UI
         [SerializeField]
         private bool _useSelectedAnimation;
         public bool UseSelectedAnimation => _useSelectedAnimation;
+        
+        [SerializeField]
+        private Image _rightImage;
+        
+        [SerializeField]
+        private Image _leftImage;
+        
+        [SerializeField]
+        private Text _infoText;
         
         private bool _isSelected;
         public bool IsSelected => _isSelected;
@@ -42,9 +47,35 @@ namespace Roulette.Utility.UI
             SetSelected(false);
         }
 
+        public void SetText(string text)
+        {
+            _infoText.text = text;
+        }
+
+        public void SetCantMoveColor(bool isRight)
+        {
+            if (isRight)
+            {
+                _rightImage.color = RouletteConst.CantMoveColor;
+            }
+            else
+            {
+                _leftImage.color = RouletteConst.CantMoveColor;
+            }
+        }
+
+        public void SetCanMoveColor()
+        {
+            _rightImage.color = RouletteConst.CanMoveColor;
+            _leftImage.color = RouletteConst.CanMoveColor;
+        }
+
         public void Show()
         {
             _mainImage.gameObject.SetActive(true);
+            _rightImage.gameObject.SetActive(true);
+            _leftImage.gameObject.SetActive(true);
+            _infoText.gameObject.SetActive(true);
             _selectImage.gameObject.SetActive(_isSelected);
             _disabledImage.gameObject.SetActive(_isDisabled);
         }
@@ -52,6 +83,9 @@ namespace Roulette.Utility.UI
         public void Hide()
         {
             _mainImage.gameObject.SetActive(false);
+            _rightImage.gameObject.SetActive(false);
+            _leftImage.gameObject.SetActive(false);
+            _infoText.gameObject.SetActive(false);
             _selectImage.gameObject.SetActive(false);
             _disabledImage.gameObject.SetActive(false);
         }

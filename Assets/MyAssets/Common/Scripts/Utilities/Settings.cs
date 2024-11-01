@@ -6,6 +6,8 @@ namespace Roulette.Utility
     /// </summary>
     public static class Settings
     {
-        public const bool CAN_SOLO_MODE = true;
+        public const bool CanSoloMode = true;
+        public const int MaxMode = 2;
+        public const bool UseItemDefault = false;
     }
 }
