@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Threading;
 using Cysharp.Threading.Tasks;
+using Roulette.Utility.Scenes;
 using Roulette.Utility.UI.Interface;
 using UnityEngine;
 
@@ -16,15 +14,15 @@ namespace Roulette.OutGame
         ItemSwitch
     }
     
-    public class WindowManager : MonoBehaviour
+    public class OutGameManager : MonoBehaviour
     {
-        private List<IOutGameWindowUI> _openedWindows = new ();
+        private List<IOutGameWindowUI> _openedWindows;
         public List<IOutGameWindowUI> OpenedWindows => _openedWindows;
         
-        private List<GameObject> _openedObjects = new ();
+        private List<GameObject> _openedObjects;
         public List<GameObject> OpenedObjects => _openedObjects;
         
-        private List<OutGameWindowType> _openedWindowTypes = new ();
+        private List<OutGameWindowType> _openedWindowTypes;
         public List<OutGameWindowType> OpenedWindowTypes => _openedWindowTypes;
         
         public OutGameWindowType CurrentWindowType => _openedWindowTypes[_openedWindows.Count - 1];
@@ -34,8 +32,8 @@ namespace Roulette.OutGame
         [SerializeField]
         private GameObject _gameSettingPrefab;
         
-        private static WindowManager instance;
-        public static WindowManager Instance
+        private static OutGameManager instance;
+        public static OutGameManager Instance
         {
             get
             {
@@ -47,8 +45,12 @@ namespace Roulette.OutGame
             }
         }
 
-        private async UniTaskVoid Start()
+        private void Start()
         {
+            _openedWindows = new List<IOutGameWindowUI>();
+            _openedObjects = new List<GameObject>();
+            _openedWindowTypes = new List<OutGameWindowType>();
+            
             OpenWindow(OutGameWindowType.ModeSelect);
         }
 
@@ -107,15 +109,13 @@ namespace Roulette.OutGame
         {
             if (_openedWindows.Count - 2 < 0)
             {
-                //タイトルに戻る
+                //SceneLoader.Instance.LoadScene(Scenes.Title);
             }
             else
             {
                 _openedWindows.RemoveAt(_openedWindows.Count - 1);
                 
                 _openedWindowTypes.RemoveAt(_openedWindowTypes.Count - 1);
-                
-                Destroy(_openedObjects[_openedObjects.Count - 1]);
                 
                 Debug.Log(_openedObjects[_openedWindows.Count - 1].name);
                 
@@ -125,14 +125,13 @@ namespace Roulette.OutGame
         
         private static void SetupInstance()
         {
-            instance = FindObjectOfType<WindowManager>();
+            instance = FindObjectOfType<OutGameManager>();
 	
             if (instance == null)
             {
                 GameObject gameObj = new GameObject();
-                gameObj.name = "WindowManager";
-                instance = gameObj.AddComponent<WindowManager>();
-                DontDestroyOnLoad(gameObj);
+                gameObj.name = "OutGameManager";
+                instance = gameObj.AddComponent<OutGameManager>();
             }
         }
     }

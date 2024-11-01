@@ -40,7 +40,7 @@ namespace Roulette.OutGame
         void Bind()
         {
             _model.Index
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType)
                 .Subscribe(x =>
                 {
                     if (_view.SelectButton(x))
@@ -57,7 +57,7 @@ namespace Roulette.OutGame
                 }).AddTo(this);
 
             _model.SelectLifeNum
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType)
                 .Subscribe(x =>
                 {
                     _view.SetStepperText(x,true);
@@ -65,7 +65,7 @@ namespace Roulette.OutGame
                 }).AddTo(this);
             
             _model.SelectPlayNum
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType)
                 .Subscribe(x =>
                 {
                     _view.SetStepperText(x,false);
@@ -73,7 +73,7 @@ namespace Roulette.OutGame
                 }).AddTo(this);
             
             _model.UseItem
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType)
                 .Subscribe(x =>
                 {
                     _view.SetCheckUseItem(x);
@@ -82,7 +82,7 @@ namespace Roulette.OutGame
             
             GameInput.Instance.DownButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
                 {
                     _model.SelectDown();
@@ -91,7 +91,7 @@ namespace Roulette.OutGame
             
             GameInput.Instance.UpButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
                 {
                     _model.SelectUp();
@@ -100,7 +100,7 @@ namespace Roulette.OutGame
             
             GameInput.Instance.RightButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
                 {
                     if (_view.Parts[_model.Index.CurrentValue].GetType() == typeof(RouletteStepper))
@@ -120,7 +120,7 @@ namespace Roulette.OutGame
             
             GameInput.Instance.LeftButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
                 {
                     if (_view.Parts[_model.Index.CurrentValue].GetType() == typeof(RouletteStepper))
@@ -140,7 +140,7 @@ namespace Roulette.OutGame
             
             GameInput.Instance.DecideButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
                 {
                     if (_view.Parts[_model.Index.CurrentValue].GetType() == typeof(RouletteCheckBox))
@@ -153,10 +153,10 @@ namespace Roulette.OutGame
             
             GameInput.Instance.CancelButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canMove)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType && _canMove)
                 .Subscribe(_ =>
                 {
-                    WindowManager.Instance.BackPreviousWindow();
+                    OutGameManager.Instance.BackPreviousWindow();
                     CanChangeMode().Forget();
                 }).AddTo(this);
         }

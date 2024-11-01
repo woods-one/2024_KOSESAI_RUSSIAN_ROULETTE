@@ -38,7 +38,7 @@ namespace Roulette.OutGame
         void Bind()
         {
             _model.ModeIndex
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType)
                 .Subscribe(x =>
                 {
                     if (_view.SelectButton(x))
@@ -56,7 +56,7 @@ namespace Roulette.OutGame
             
             GameInput.Instance.RightButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>
                 {
                     _model.ChangeRightMode();
@@ -65,7 +65,7 @@ namespace Roulette.OutGame
             
             GameInput.Instance.LeftButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>
                 {
                     _model.ChangeLeftMode();
@@ -74,19 +74,19 @@ namespace Roulette.OutGame
             
             GameInput.Instance.DecideButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>
                 {
-                    WindowManager.Instance.OpenWindow(OutGameWindowType.GameSetting,new OutGameWindowInfo(_model.ModeIndex.CurrentValue == 0));
+                    OutGameManager.Instance.OpenWindow(OutGameWindowType.GameSetting,new OutGameWindowInfo(_model.ModeIndex.CurrentValue == 0));
                     CanChangeMode().Forget();
                 }).AddTo(this);
             
             GameInput.Instance.CancelButton
                 .Skip(1)
-                .Where(_ => WindowManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
+                .Where(_ => OutGameManager.Instance.CurrentWindowType == _windowType && _canChangeMode)
                 .Subscribe(_ =>
                 {
-                    WindowManager.Instance.BackPreviousWindow();
+                    OutGameManager.Instance.BackPreviousWindow();
                     CanChangeMode().Forget();
                 }).AddTo(this);
         }

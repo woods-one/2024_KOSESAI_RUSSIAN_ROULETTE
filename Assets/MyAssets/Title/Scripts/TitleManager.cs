@@ -1,6 +1,7 @@
 using R3;
 using Roulette.Utility.Inputs;
 using Roulette.Utility.Scenes;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Roulette.Title
@@ -9,9 +10,12 @@ namespace Roulette.Title
     {
         private bool _pressAnyKey = false;
         
-        private void Start()
+        private async UniTaskVoid Start()
         {
             _pressAnyKey = false;
+            
+            await UniTask.Delay(2000);
+            
             Bind();
         }
 
